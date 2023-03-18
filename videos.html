@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Videos</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- start of css connections of font  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- end of css connections of font  -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body class="body">
+    <body class="body">
+      <div class="container container-fluid movie-app">
+        <div id="header" class="flex space alignment">
+          <h2 style="margin-top: 8px">Movies 2022</h2>
+        </div>
+        <hr />
+        <h2 style="margin-left: 15px;">Movie Trailer:</h2>
+        <div id="videos-api" class="row" style="margin: 30px 0"></div>
+      </div>
+      <script>
+        //rewriting this code again to get related movies data from API
+        const id = localStorage.getItem("videoId");
+        console.log(id);
+        const apiKey = "1cf35cc428b913fe98461f80210127bc";
+        //start of code for fetching related movies data
+        fetch(
+          "https://api.themoviedb.org/3/movie/" +
+            id +
+            "?api_key=" +
+            apiKey +
+            "&append_to_response=videos"
+        )
+          .then((response) => response.json())
+          .then((data) => videoDatas(data));
+        function videoDatas(getData) {
+          getData.videos.results.map((videomovie) => {
+            const { key } = videomovie;
+            const video_div = document.getElementById("videos-api");
+            video_div.innerHTML = "";
+            const videoCE = document.createElement("div");
+            videoCE.classList.add("video-card");
+            videoCE.innerHTML = `
+          <iframe src="https://www.youtube.com/embed/${key}" id="iframe" frameborder="0"  ></iframe>
+          
+          `;
+            video_div.appendChild(videoCE);
+          });
+        }
+      </script>
+    </body>
+  </body>
+</html>
